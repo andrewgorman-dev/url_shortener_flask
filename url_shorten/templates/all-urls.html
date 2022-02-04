@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} mt-3 mb-2">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+<div class="text-center mt-5">
+    <h1>All Your Shortened Urls</h1>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">url id</th>
+            <th scope="col">Name</th>
+            <th scope="col">short url</th>
+            <th scope="col">created on</th>
+            <th scope="col">expiry date time</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for row in all_urls %}
+        <tr>
+            <th>{{ row.id }}</th>
+            <td>{{ row.name }}</td>
+            <td><a href="{{ row.long }}">http://127.0.0.1/{{ row.short }}</a></td>
+            <td>{{ row.created_at }}</td>
+            <td>{{ row.expiry_date_time }}</td>
+            <td>
+                <button type="button" class="btn btn-outline-danger p-2 border
+                    rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            </td>
+        </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Permanently Delete This Link?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="{{ url_for('delete', id=row.id) }}" method="POST">
+                            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<div class="text-center">
+    <a href="http://127.0.0.1:5000/" class="btn btn-outline-dark border rounded
+        p-2 w-50">Home</a>
+</div>
+
+
+{% endblock %}

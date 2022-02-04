@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} mt-3 mb-3">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+<p>Click to try:</p>
+<a href="http://127.0.0.1:5000/{{ short_url_display }}" class="btn btn-lg btn-dark">http://127.0.0.1:5000/{{
+    short_url_display }}</a>
+<hr>
+<a href="http://127.0.0.1:5000/" class="btn btn-outline-success border rounded p-2 w-50">Home</a>
+<hr>
+<a href="{{ url_for('all')}}" class="btn btn-outline-info mt-3 p-2 border rounded w-50">See all my shorties</a>
+{% endblock %}
