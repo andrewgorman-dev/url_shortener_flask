@@ -1,4 +1,5 @@
-A simple url shortener with automatic and custom expiry dates 
+A simple url shortener with automatic and custom expiry dates
+requires python_version 3.9 
 
 To run locally:
 
